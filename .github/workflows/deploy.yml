@@ -35,5 +35,4 @@ jobs:
           # Upload entire repository
           path: 'book'
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
