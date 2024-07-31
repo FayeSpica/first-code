@@ -1,0 +1,6 @@
+[book]
+authors = ["FayeSpica"]
+language = "en"
+multilingual = false
+src = "src"
+title = "代码随想录@FayeS"
