@@ -3,6 +3,8 @@
 ## p704
 
 ```rust
+struct Solution{}
+
 use std::cmp::Ordering;
 impl Solution {
     pub fn search(nums: Vec<i32>, target: i32) -> i32 {
@@ -20,5 +22,9 @@ impl Solution {
 
         -1
     }
+}
+
+fn main() {
+    assert_eq!(4, Solution::search(vec![-1,0,3,5,9,12], 9))
 }
 ```

@@ -18,3 +18,7 @@ impl Solution {
         -1
     }
 }
+
+fn main() {
+    assert_eq!(4, Solution::search(vec![-1,0,3,5,9,12], 9))
+}
