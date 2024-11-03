@@ -1,4 +1,6 @@
 book
 .idea
+java/.idea
+java/target
 problems/.idea
 problems/target
