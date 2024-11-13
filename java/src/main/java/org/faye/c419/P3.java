@@ -14,10 +14,10 @@ public class P3 {
             }
         }
 
-        for (int i = 0; i < s.length(); i++) {
-            dp[0][0][c('F')] =
-        }
-
+//        for (int i = 0; i < s.length(); i++) {
+//            dp[0][0][c('F')] =
+//        }
+        return 0;
     }
 
     public int win(char bob, char alice) {
