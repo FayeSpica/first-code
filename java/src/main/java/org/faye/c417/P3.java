@@ -4,110 +4,36 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class P3 {
-    // todo
-    public int countOfSubstrings(String word, int k) {
-        int res = 0;
+    public long countOfSubstrings(String word, int k) {
+        return _countOfSubstrings(word, k) - _countOfSubstrings(word, k + 1);
+    }
+
+    public long _countOfSubstrings(String word, int k) {
+        long res = 0;
         int[] counter = new int[6];
-        int start = 0;
-        int end = 0;
+        int left = 0;
         Set<Character> vowelSet = new HashSet<>();
 
-        for (;end < word.length() && end < 5 + k; end++) {
-            int i = m(word.charAt(end));
-            counter[i]++;
-            if (i > 0) {
-                vowelSet.add(word.charAt(end));
-            }
-        }
+        for (int i = 0; i < word.length(); i++) {
+            char now = word.charAt(i);
+            int j = m(now);
+            counter[j]++;
 
-        // 长度至少为 5 + k
-        while (true) {
-            if (end == word.length() - 1) {
-                break;
+            if (j > 0) {
+                vowelSet.add(now);
             }
 
-            System.out.println("start: " + start + " end: " + end);
-
-            for (int j = start + 1; j <= end; j++) {
-                System.out.print(word.charAt(j) + " ");
-            }
-            System.out.println();
-
-            // 什么时候end++
-            // 什么时候start++
-
-            if (k == counter[0] && vowelSet.size() == 5) {
-                System.out.println("!");
-                res++;
-
-                // 如果end是0 且 start是0
-                int end_i = m(word.charAt(end));
-                int start_i = m(word.charAt(start));
-
-                if (end_i == 0 && start_i == 0) {
-                    start++;
-                    end++;
-                } else if (end_i == 0 && start_i > 0) {
-                    counter[start_i]--;
-                } else if (end_i > 0 && start_i == 0) {
-                    counter[end_i]++;
-                    end++;
-                } else if (end_i > 0 && start_i > 0) {
-
+            while (vowelSet.size() == 5 && counter[0] >= k) {
+                char out = word.charAt(left);
+                int l = m(out);
+                counter[l]--;
+                if (l > 0 && counter[l] == 0) {
+                    vowelSet.remove(out);
                 }
+                left++;
             }
 
-//            if (k == counter[0] && vowelSet.size() == 5) {
-//
-//                System.out.println("!");
-//
-//                res++;
-//
-//                if (end < word.length() - 1) {
-//                    end++;
-//                    i = m(word.charAt(end));
-//                    counter[i]++;
-//                    if (i > 0) {
-//                        vowelSet.add(word.charAt(end));
-//                    }
-//                } else {
-//                    if (start < word.length() - 1) {
-//                        start++;
-//                        i = m(word.charAt(start));
-//                        counter[i]--;
-//                        if (i > 0 && counter[i] == 0) {
-//                            vowelSet.remove(word.charAt(start));
-//                        }
-//                    }
-//                }
-//            } else {
-//                if (counter[0] > k) {
-//                    start++;
-//                    i = m(word.charAt(start));
-//                    counter[i]--;
-//                    if (i > 0 && counter[i] == 0) {
-//                        vowelSet.remove(word.charAt(start));
-//                    }
-//                } else {
-//                    if (end < word.length() - 1) {
-//                        end++;
-//                        i = m(word.charAt(end));
-//                        counter[i]++;
-//                        if (i > 0) {
-//                            vowelSet.add(word.charAt(end));
-//                        }
-//                    } else {
-//                        if (start < word.length() - 1) {
-//                            start++;
-//                            i = m(word.charAt(start));
-//                            counter[i]--;
-//                            if (i > 0 && counter[i] == 0) {
-//                                vowelSet.remove(word.charAt(start));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+            res += left;
         }
 
         return res;
