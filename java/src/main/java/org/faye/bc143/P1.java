@@ -1,4 +1,4 @@
-package org.faye.dc143;
+package org.faye.bc143;
 
 public class P1 {
     public int smallestNumber(int n, int t) {
