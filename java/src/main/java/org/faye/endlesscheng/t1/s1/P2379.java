@@ -1,4 +1,4 @@
-package org.faye.endlesscheng.t1;
+package org.faye.endlesscheng.t1.s1;
 
 public class P2379 {
     public int minimumRecolors(String blocks, int k) {

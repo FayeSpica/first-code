@@ -1,4 +1,4 @@
-package org.faye.endlesscheng.t1;
+package org.faye.endlesscheng.t1.s1;
 
 public class P1151 {
     public int minSwaps(int[] data) {

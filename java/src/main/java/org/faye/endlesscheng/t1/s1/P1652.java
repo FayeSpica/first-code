@@ -1,4 +1,4 @@
-package org.faye.endlesscheng.t1;
+package org.faye.endlesscheng.t1.s1;
 
 import java.util.Arrays;
 
