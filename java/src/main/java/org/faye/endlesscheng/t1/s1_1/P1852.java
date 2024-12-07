@@ -1,4 +1,4 @@
-package org.faye.endlesscheng.t1.s1;
+package org.faye.endlesscheng.t1.s1_1;
 
 import java.util.HashSet;
 import java.util.Set;

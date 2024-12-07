@@ -1,4 +1,4 @@
-package org.faye.endlesscheng.t1.s1;
+package org.faye.endlesscheng.t1.s1_1;
 
 public class P643 {
     public double findMaxAverage(int[] nums, int k) {
