@@ -9,6 +9,12 @@ class TaskManager {
         public Integer taskId;
         public Integer priority;
 
+        public Task(Task t) {
+            this.taskId = t.taskId;
+            this.userId = t.userId;
+            this.priority = t.priority;
+        }
+
         public Task(Integer taskId) {
             this.taskId = taskId;
         }
@@ -39,40 +45,47 @@ class TaskManager {
             return o2.priority.compareTo(o1.priority);
         }
     });
-    Map<Integer, Integer> taskIdUserIdMap = new HashMap<>();
+    Map<Integer, Task> taskHashMap = new HashMap<>();
 
     public TaskManager(List<List<Integer>> tasks) {
         taskQueue.clear();
-        taskIdUserIdMap.clear();
+        taskHashMap.clear();
         for (List<Integer> task : tasks) {
-            taskQueue.add(new Task(task.get(0), task.get(1), task.get(2)));
-            taskIdUserIdMap.put(task.get(1), task.get(0));
+            Task t = new Task(task.get(0), task.get(1), task.get(2));
+            taskQueue.add(t);
+            taskHashMap.put(t.taskId, new Task(t));
         }
     }
 
     public void add(int userId, int taskId, int priority) {
-        taskQueue.add(new Task(userId, taskId, priority));
-        taskIdUserIdMap.put(taskId, userId);
+        Task t = new Task(userId, taskId, priority);
+        taskQueue.offer(t);
+        taskHashMap.put(taskId, new Task(t));
     }
 
     public void edit(int taskId, int newPriority) {
-        Task newTask = new Task(taskIdUserIdMap.get(taskId), taskId, newPriority);
-        taskQueue.remove(newTask);
-        taskQueue.add(newTask);
+        Task t = taskHashMap.get(taskId);
+        t.priority = newPriority;
+        taskQueue.offer(new Task(t));
     }
 
     public void rmv(int taskId) {
-        taskQueue.remove(new Task(taskId));
-        taskIdUserIdMap.remove(taskId);
+        taskHashMap.get(taskId).userId = -1;
     }
 
     public int execTop() {
-        if (taskQueue.isEmpty()) {
-            return -1;
+        while (!taskQueue.isEmpty()) {
+            Task pendingTask = taskQueue.poll();
+            Task acutalTask = taskHashMap.get(pendingTask.taskId);
+            if (acutalTask == null) {
+                continue;
+            }
+            if (Objects.equals(pendingTask.priority, acutalTask.priority) && Objects.equals(pendingTask.userId, acutalTask.userId)) {
+                taskHashMap.remove(pendingTask.taskId);
+                return acutalTask.userId;
+            }
         }
-        Task pendingTask = taskQueue.poll();
-        taskIdUserIdMap.remove(pendingTask.taskId);
-        return pendingTask.userId;
+        return -1;
     }
 
     public static void main(String[] args) {
