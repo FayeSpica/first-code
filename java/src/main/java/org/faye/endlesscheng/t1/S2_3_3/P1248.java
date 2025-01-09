@@ -4,25 +4,31 @@ import java.util.Arrays;
 
 public class P1248 {
     public int numberOfSubarrays(int[] nums, int k) {
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] % 2== 1) {
-                nums[i] = 1;
-            } else {
-                nums[i] = 0;
-            }
+        return numberOfSubarraysGt(nums, k) - numberOfSubarraysGt(nums, k + 1);
+    }
+
+    public int numberOfSubarraysGt(int[] nums, int k) {
+        int count = 0;
+        int sum = 0;
+        int left = 0;
+        int right = 1;
+        sum += nums[left] % 2 == 0 ? 0 : 1;
+        if (sum >= k) {
+            count++;
         }
-
-        // 和为k的数量
-        // 0 0 0 1 0 0 1 0 1 0
-
-        System.out.println(Arrays.toString(nums));
-
-        int res = 0;
-
-        return res;
+        while (right < nums.length) {
+            sum += nums[right] % 2 == 0 ? 0 : 1;
+            while (sum >= k && left <= right) {
+                count += nums.length - right;
+                sum -= nums[left] % 2 == 0 ? 0 : 1;
+                left++;
+            }
+            right++;
+        }
+        return count;
     }
 
     public static void main(String[] args) {
-        System.out.println(new P1248().numberOfSubarrays(new int[] { 1, 1, 2, 1, 1 }, 3));
+        System.out.println(new P1248().numberOfSubarrays(new int[] { 1, 1, 1, 1, 1 }, 1));
     }
 }
